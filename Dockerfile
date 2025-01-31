@@ -1,4 +1,4 @@
-FROM alpine:3.17.3 as base
+FROM alpine:3.21.2 as base
 
 RUN apk add pcre-dev
 
@@ -6,7 +6,7 @@ RUN apk add pcre-dev
 
 FROM base as builder
 
-ENV NGINX_VERSION 1.23.4
+ENV NGINX_VERSION 1.27.1
 
 WORKDIR /tmp
 
@@ -14,7 +14,7 @@ RUN apk add alpine-sdk openssl-dev zlib-dev
 
 RUN \
   set -x; \
-  curl -LSs http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O; \
+  curl -LSs https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz -O; \
   tar xf nginx-${NGINX_VERSION}.tar.gz; \
   cd nginx-${NGINX_VERSION}; \
   \
