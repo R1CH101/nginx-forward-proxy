@@ -8,7 +8,7 @@ FROM base AS builder
 
 WORKDIR /tmp
 RUN apt update
-RUN apt install -y git
+RUN apt install -y git wget
 RUN git clone https://github.com/chobits/ngx_http_proxy_connect_module.git
 
 RUN wget http://nginx.org/download/nginx-1.9.2.tar.g 
