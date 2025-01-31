@@ -30,10 +30,6 @@ RUN apt update \
 
 # ==================================================================================================
 
-FROM base
-
-COPY --from=builder /usr/local/nginx /usr/local/nginx
-COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
 COPY ./nginx.conf /usr/local/nginx/conf/nginx.conf
 
 CMD ["/bin/sh", "-c", "nginx -V; nginx -t; nginx"]
