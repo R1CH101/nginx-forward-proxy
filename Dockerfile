@@ -8,10 +8,10 @@ FROM base AS builder
 
 WORKDIR /tmp
 RUN apt update
-RUN apt install -y git wget
+RUN apt install -y git curl
 RUN git clone https://github.com/chobits/ngx_http_proxy_connect_module.git
 
-RUN curl --output nginx-1.9.2.tar.gz "http://nginx.org/download/nginx-1.9.2.tar.gz"
+RUN curl -O nginx-1.9.2.tar.gz "http://nginx.org/download/nginx-1.9.2.tar.gz"
 
 RUN tar -xzvf nginx-1.9.2.tar.gz 
 
