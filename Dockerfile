@@ -8,7 +8,11 @@ FROM base AS builder
 
 WORKDIR /tmp
 RUN apt update
-RUN apt install -y git curl patch
+RUN apt install -y git curl build-essential \
+        libpcre3-dev \
+        zlib1g-dev \
+        libssl-dev \
+        openssl-dev
 RUN git clone https://github.com/chobits/ngx_http_proxy_connect_module.git
 
 RUN curl -O "http://nginx.org/download/nginx-1.9.2.tar.gz"
@@ -24,7 +28,6 @@ RUN make && make install
 
 
 
-RUN apt-get install openssl-dev zlib-dev
 
 
 
