@@ -1,31 +1,28 @@
-FROM ubuntu:22.04 AS base
+FROM debian:stretch-slim
 
+LABEL org.opencontainers.image.authors="zachdeibert@gmail.com"
 
-# ==================================================================================================
+CMD [ "/usr/local/nginx/sbin/nginx", "-g", "daemon off;" ]
+EXPOSE 80
+STOPSIGNAL SIGTERM
 
-FROM base AS builder
-
-
-WORKDIR /tmp
-RUN apt update
-RUN apt install -y git curl build-essential \
+RUN apt update \
+    && apt install -y \
+        build-essential \
+        curl \
         libpcre3-dev \
         zlib1g-dev \
         libssl-dev \
-        openssl-dev
-RUN git clone https://github.com/chobits/ngx_http_proxy_connect_module.git
-
-RUN curl -O "http://nginx.org/download/nginx-1.9.2.tar.gz"
-
-RUN tar -xzvf nginx-1.9.2.tar.gz 
-
-RUN cd nginx-1.9.2/
-patch -p1 < ./ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch
-
-RUN ./configure --add-module=./ngx_http_proxy_connect_module
-
-RUN make && make install
-
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -L https://nginx.org/download/nginx-1.15.2.tar.gz | tar xz \
+    && curl -L https://github.com/chobits/ngx_http_proxy_connect_module/archive/master.tar.gz | tar xz \
+    && cd nginx-1.15.2 \
+    && patch -p1 < ../ngx_http_proxy_connect_module-master/patch/proxy_connect_rewrite_1015.patch \
+    && ./configure --add-module=../ngx_http_proxy_connect_module-master --with-http_ssl_module \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf nginx-1.15.2 ngx_http_proxy_connect_module-master
 
 
 
