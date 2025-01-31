@@ -18,7 +18,8 @@ RUN tar -xzvf nginx-1.9.2.tar.gz
 RUN cd nginx-1.9.2/patch -p1 < ./ngx_http_proxy_connect_module/patch/proxy_connect_rewrite_102101.patch
 
 RUN ./configure --add-module=./ngx_http_proxy_connect_module
-make && make install
+
+RUN make && make install
 
 
 
