@@ -22,7 +22,7 @@ RUN make && make install
 
 
 
-RUN apk add alpine-sdk openssl-dev zlib-dev
+RUN apt-get install openssl-dev zlib-dev
 
 
 
