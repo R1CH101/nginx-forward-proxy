@@ -1,10 +1,9 @@
-FROM alpine:3.21.2 as base
+FROM debian:jessie AS base
 
-RUN apk add pcre-dev
 
 # ==================================================================================================
 
-FROM base as builder
+FROM base AS builder
 
 
 WORKDIR /tmp
@@ -30,8 +29,6 @@ RUN apk add alpine-sdk openssl-dev zlib-dev
 # ==================================================================================================
 
 FROM base
-
-LABEL maintainer "Dominik Winter <dominik.winter@klarna.com>"
 
 COPY --from=builder /usr/local/nginx /usr/local/nginx
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
